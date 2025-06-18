@@ -1,0 +1,10 @@
+streamlit
+python-docx
+PyPDF2
+openpyxl
+reportlab
+arabic_reshaper
+python-bidi
+openai
+python-dotenv
+tiktoken
