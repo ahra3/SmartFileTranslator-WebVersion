@@ -5,7 +5,6 @@ import httpx
 import tempfile
 import arabic_reshaper
 from bidi.algorithm import get_display
-from dotenv import load_dotenv
 from docx import Document
 from PyPDF2 import PdfReader
 import openpyxl
@@ -17,9 +16,6 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 import tiktoken
 from openai import OpenAI
-
-# Load environment variables from .env
-load_dotenv()
 
 # Token-based chunking
 def split_into_token_chunks(text, max_tokens=2000):
@@ -114,11 +110,11 @@ def translate_text(text, target_language, update_progress):
     model = "openai/gpt-4.1"
     fallback_model = "openai/gpt-4.1-mini"
     token_map = {
-        model: os.getenv("GITHUB_TOKEN_4_1"),
-        fallback_model: os.getenv("GITHUB_TOKEN_4_1_MINI")
+        model: st.secrets["GITHUB_TOKEN_4_1"],
+        fallback_model: st.secrets["GITHUB_TOKEN_4_1_MINI"]
     }
     if not token_map[model] or not token_map[fallback_model]:
-        raise EnvironmentError("Model tokens not set in .env")
+        raise EnvironmentError("Model tokens not set in Streamlit secrets")
 
     for i, chunk in enumerate(chunks):
         try:
